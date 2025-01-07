@@ -4,6 +4,12 @@ const dotenv = require('dotenv');
 const sql = require('mssql');
 const cors= require("cors");
 const bodyparser= require("body-parser");
+const { userauth } = require('./userauth');
+const { questiondb } = require("./Questiondb/api/admin");
+const { serverv10 } = require("./Server_V10/server_V10");
+const { facultycurriculumrbac } = require("./FacultyCurriculumRbac/routes/index");
+const { serverv9 } = require("./interviewer/server_V9");
+const { interviewerrbac } = require("./interviewerrbac/routes/index");
 
 dotenv.config();
 
@@ -13,6 +19,13 @@ app.use(compression());
 app.use(cors());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:true}));
+
+app.use("",userauth);
+app.use("/api/admin", questiondb);
+app.use("",serverv10);
+app.use("",facultycurriculumrbac);
+app.use("",serverv9);
+app.use("",interviewerrbac);
 
 
 const port = process.env.PORT || 3000;
